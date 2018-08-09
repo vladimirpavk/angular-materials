@@ -4,10 +4,15 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { MaterialsModule } from './materials.module';
+import { DialogExampleComponent } from './dialog-example/dialog-example.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DialogExampleComponent
+  ],
+  entryComponents: [
+    DialogExampleComponent
   ],
   imports: [
     BrowserModule,

@@ -4,7 +4,9 @@
     mat-button 
     matBadge="178" 
     matBadgePosition="after"
-    (click)="openSnackBar()">
+    (click)="openSnackBar()"
+    matTooltip="Opens the snackbar component"
+    matTooltipPosition="right">
     Please click me</button>
 </div>
 
@@ -13,3 +15,14 @@
     <input matInput placeholder="Nešto unesi" value="Vrednost">
   </mat-form-field>
 </form>
+
+<div style="text-align:center">
+    <button 
+      mat-button      
+      (click)="openDialog()">
+      Please click me</button>
+</div>
+
+<table mat-table [dataSource]="tableData">
+  
+</table>
