@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogExampleComponent } from './dialog-example/dialog-example.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { FetchService, User } from './fetch.service';
 
 export interface DialogData{
   ime:string,
@@ -20,28 +23,45 @@ export class TableData{
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'angular-materials';
-  tableElements:TableData[] = [];
+  public title = 'angular-materials';
+    
+  public tableElements:TableData[] = [
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' },
+    { name:'Pavle', lastname:'Pavković' }
+  ];
+  public tableDataSource=new MatTableDataSource<TableData>(this.tableElements);
+
+  public columnsToDisplay:string[] = ['name', 'lastname'];
 
   constructor(
     private snackBar:MatSnackBar,
-    private dialog:MatDialog
+    private dialog:MatDialog,
+    private service:FetchService
   ){}
 
-  ngOnInit(){
-    this.tableElements=[
-      new TableData('Pavle', 'Pavković'),
-      new TableData('Pavle', 'Pavković'),
-      new TableData('Pavle', 'Pavković'),
-      new TableData('Pavle', 'Pavković'),
-      new TableData('Pavle', 'Pavković'),
-      new TableData('Pavle', 'Pavković'),
-      new TableData('Pavle', 'Pavković'),
-      new TableData('Pavle', 'Pavković'),
-      new TableData('Pavle', 'Pavković'),
-      new TableData('Pavle', 'Pavković'),
-      new TableData('Pavle', 'Pavković')
-    ]
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  ngOnInit(){   
+    this.tableDataSource.paginator = this.paginator;
   }
 
   openSnackBar() {
@@ -69,6 +89,12 @@ export class AppComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result)=>{
       console.log(result);
-    })
+    });    
+  }
+
+  private fetchUsers(){
+      this.service.fetchUsers().subscribe((users:User[])=>{
+        console.log(users);
+      });
   }
 }
