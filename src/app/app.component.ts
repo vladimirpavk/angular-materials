@@ -5,6 +5,7 @@ import { DialogExampleComponent } from './dialog-example/dialog-example.componen
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { FetchService, User } from './fetch.service';
+import { UserDataSource } from './userdatasource';
 
 export interface DialogData{
   ime:string,
@@ -48,9 +49,11 @@ export class AppComponent implements OnInit {
     { name:'Pavle', lastname:'Pavković' },
     { name:'Pavle', lastname:'Pavković' }
   ];
-  public tableDataSource=new MatTableDataSource<TableData>(this.tableElements);
+  public tableDataSource=new MatTableDataSource();
+  
 
-  public columnsToDisplay:string[] = ['name', 'lastname'];
+  public dataSource = new UserDataSource(this.service);
+  public columnsToDisplay:string[] = ['name', 'email', 'phone'];
 
   constructor(
     private snackBar:MatSnackBar,
@@ -60,8 +63,8 @@ export class AppComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  ngOnInit(){   
-    this.tableDataSource.paginator = this.paginator;
+  ngOnInit(){       
+    
   }
 
   openSnackBar() {
@@ -94,7 +97,7 @@ export class AppComponent implements OnInit {
 
   private fetchUsers(){
       this.service.fetchUsers().subscribe((users:User[])=>{
-        console.log(users);
+        this.tableDataSource.data=users;
       });
   }
 }

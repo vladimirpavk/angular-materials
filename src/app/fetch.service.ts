@@ -5,17 +5,12 @@ import { Observable } from 'rxjs';
 export class User{
   constructor(
     public name: string,
-    email: string,
-    phone: string,
-    company: {
-        name: string;
-    }    
+    public email: string,
+    public phone: string,     
   ){}
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class FetchService {
 
   private serviceUrl = 'https://jsonplaceholder.typicode.com/users';
